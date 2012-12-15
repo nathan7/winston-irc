@@ -1,0 +1,28 @@
+{
+  "name": "winston-irc",
+  "version": "0.0.0",
+  "description": "an IRC transport for Winston",
+  "main": "index.js",
+  "scripts": {
+    "test": "tests-of-the-sierra-madre"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nathan7/winston-irc.git"
+  },
+  "keywords": [
+    "irc",
+    "winston",
+    "logging"
+  ],
+  "author": "Nathan Zadoks",
+  "license": "BSD",
+  "dependencies": {
+    "irc": "~0.3.4",
+    "async": "~0.1.22"
+  },
+  "devDependencies": {
+    "winston": "~0.6.2",
+    "tests-of-the-sierra-madre": "0.0.0"
+  }
+}
