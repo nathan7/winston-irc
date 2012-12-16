@@ -1,6 +1,6 @@
 {
   "name": "winston-irc",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "an IRC transport for Winston",
   "main": "index.js",
   "scripts": {
