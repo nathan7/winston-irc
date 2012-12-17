@@ -64,8 +64,27 @@ function Irc(options) {
       self._client.say(channel, text);
       return callback();
     }, 1);
+
+    self.queues[channel].drain = function() {
+      self._ref();
+    };
+
+    var push = self.queues[channel].push;
+    self.queues[channel].push = function(data, cb){
+      var ret = push.apply(this, arguments);
+      self._ref();
+      return ret;
+    };
   });
 }
+
+Irc.prototype._ref = function() {
+  var self = this;
+  var empty = Object.keys(this.queues).every(function(key) { return self.queues[key].length() === 0; });
+  if (!this._client || !this._client.conn || !this._client.conn.unref || !this._client.conn.ref) return;
+  if (empty) this._client.conn.unref();
+  else this._client.conn.ref();
+};
 
 Irc.prototype.log = function(level, msg, meta, callback) {
   var self = this;
