@@ -14,6 +14,11 @@ options is an object with the following properties
  * level: the logging level, used by Winston.
  * channels: either an array of 'channels' to log to (nicknames are allowed too) or an object, with the channel names as keys and with arrays with levels to be logged there as value. true means all levels.
 
+a note of caution
+-----------------
+as of node 0.8.16, sockets don't support ref/unref yet. this means winston-irc will keep your app from terminating because node sees there's still something active.
+when available winston-irc uses ref/unref (supported from node 0.9.1 on) so that your application will smoothly terminate as usual when everything's been done and logged.
+
 an example
 ----------
 
