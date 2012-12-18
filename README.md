@@ -4,7 +4,8 @@ winston-irc is an IRC transport for [Winston], the awesome node.js logging libra
 
 new Irc(options)
 ----------------
-returns a new transport instance
+returns a new transport instance. you probably won't ever use this constructor directly, it's more convenient to use it through Winston as in the example.
+
 options is an object with the following properties
  * host: the IRC server
  * port: the IRC port (defaults to 6667 for plaintext, 6697 for SSL)
