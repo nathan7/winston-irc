@@ -59,8 +59,8 @@ function Irc(options) {
   Object.keys(this.channels).forEach(function(channel) {
     var isNick = CHANCHARS.indexOf(channel[0]) == -1;
     self.queues[channel] = async.queue(function trylog(text, callback) {
-      if (!self.connected) return self._client.on('registered', trylog.bind(null, text, callback));
-      if (!isNick && !(channel in self._client.chans)) return self._client.on('join', trylog.bind(null, text, callback));
+      if (!self.connected) return self._client.once('registered', trylog.bind(null, text, callback));
+      if (!isNick && !(channel in self._client.chans)) return self._client.once('join', trylog.bind(null, text, callback));
       self._client.say(channel, text);
       return callback();
     }, 1);
