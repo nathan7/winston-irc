@@ -32,7 +32,7 @@ function Irc(options) {
   }
 
   if (!this.port) {
-    this.port = this.ssl ? 6667 : 6667;
+    this.port = this.ssl ? 6697 : 6667;
   }
 
   // initialise IRC client
