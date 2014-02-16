@@ -19,6 +19,7 @@ function Irc(options) {
   this.port = options.port;
   this.nick = options.nick;
   this.pass = options.pass;
+  this.details = options.details || false;
   this.level = options.level || 'info';
 
   if (Array.isArray(options.channels)) {
@@ -93,6 +94,7 @@ Irc.prototype.log = function(level, msg, meta, callback) {
     msg: msg,
     meta: meta
   });
+
   async.forEach(Object.keys(this.channels), function(channel, callback) {
     //XXX: this really should be message.level >= channel.level, not message.level == channel.level. winston doesn't seem to expose log levels, however.
     if (self.channels[channel] != level && self.channels[channel] !== true && (!Array.isArray(self.channels[channel]) || self.channels[channel].indexOf(level) == -1)) return;
@@ -102,5 +104,8 @@ Irc.prototype.log = function(level, msg, meta, callback) {
 
 Irc.prototype.format = function(data) {
   //TODO: colorize
-  return data.level + ': ' + data.msg;
+  if (this.details)
+    return data.level + ': ' + data.msg + '[' + JSON.stringify(data.meta) + ']' ;
+  else
+    return data.level + ': ' + data.msg ;
 };
