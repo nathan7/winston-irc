@@ -55,6 +55,11 @@ function Irc(options) {
     this.connected = false;
   }.bind(this));
 
+  // pass errors on
+  this._client.conn.on('error', function(err) {
+    this.emit('error', err);
+  }.bind(this));
+
   // set up queues for handling messages only when the channel is joined
   this.queues = {};
   Object.keys(this.channels).forEach(function(channel) {
