@@ -19,6 +19,7 @@ function Irc(options) {
   this.port = options.port;
   this.nick = options.nick;
   this.pass = options.pass;
+  this.selfSigned = option.selfSigned || false;
   this.details = options.details || false;
   this.level = options.level || 'info';
 
