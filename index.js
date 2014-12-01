@@ -45,7 +45,8 @@ function Irc(options) {
     nick: this.nick,
     password: this.pass,
     userName: 'winston',
-    realName: 'winston IRC logger'
+    realName: 'winston IRC logger',
+    selfSigned: this.selfSigned
   });
 
   // keep connected state on the transport object
