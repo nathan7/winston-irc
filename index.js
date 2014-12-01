@@ -19,6 +19,7 @@ function Irc(options) {
   this.port = options.port;
   this.nick = options.nick;
   this.pass = options.pass;
+  this.selfSigned = option.selfSigned || false;
   this.details = options.details || false;
   this.level = options.level || 'info';
 
@@ -44,7 +45,8 @@ function Irc(options) {
     nick: this.nick,
     password: this.pass,
     userName: 'winston',
-    realName: 'winston IRC logger'
+    realName: 'winston IRC logger',
+    selfSigned: this.selfSigned
   });
 
   // keep connected state on the transport object
