@@ -51,7 +51,7 @@ function Irc(options) {
   options.channels = Object.keys(this.channels).filter(function(channel) { return CHANCHARS.indexOf(channel[0]) != -1; });
 
   // initialise IRC client
-  this._client = new irc.Client(this.host, this.nick, options);
+  this._client = new irc.Client(options.host, options.nick, options);
 
   // keep connected state on the transport object
   this._client.on('registered', function() {
