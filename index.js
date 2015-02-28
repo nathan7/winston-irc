@@ -10,17 +10,29 @@ exports.Irc = Irc;
 
 util.inherits(Irc, winston.Transport);
 function Irc(options) {
-  options = options || {};
+  
   var self = this;
+  self.defaults = {
+	  name : 'irc',
+	  ssl  : false,
+	  host : 'localhost',
+	  details : false,
+	  level : 'info',
+	  userName : "winston",
+	  realName: "winston IRC logger"
+  };
 
-  this.name = 'irc';
-  this.ssl = !!options.ssl;
-  this.host = options.host || 'localhost';
-  this.port = options.port;
-  this.nick = options.nick;
-  this.pass = options.pass;
-  this.details = options.details || false;
-  this.level = options.level || 'info';
+
+    if (typeof options == 'object') {
+        Object.keys(self.defaults).forEach(function(k,v) {
+		if (!options[k]) {
+			options[k] = self.defaults[k];
+		}
+	});
+    } else {
+	options = self.defaults;
+    }
+
 
   if (Array.isArray(options.channels)) {
     this.channels = {};
@@ -36,16 +48,10 @@ function Irc(options) {
     this.port = this.ssl ? 6697 : 6667;
   }
 
+  options.channels = Object.keys(this.channels).filter(function(channel) { return CHANCHARS.indexOf(channel[0]) != -1; });
+
   // initialise IRC client
-  this._client = new irc.Client(this.host, this.nick, {
-    channels: Object.keys(this.channels).filter(function(channel) { return CHANCHARS.indexOf(channel[0]) != -1; }),
-    port: this.port,
-    secure: this.ssl,
-    nick: this.nick,
-    password: this.pass,
-    userName: 'winston',
-    realName: 'winston IRC logger'
-  });
+  this._client = new irc.Client(options.host, options.nick, options);
 
   // keep connected state on the transport object
   this._client.on('registered', function() {
